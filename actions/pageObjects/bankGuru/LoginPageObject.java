@@ -12,10 +12,6 @@ public class LoginPageObject extends BasePage {
 		this.driver = driver;
 	}
 
-	public String getLoginPageUrl() {
-		return getPageUrl(driver);
-	}
-
 	public void clickToRegisterLink() {
 		waitForElementClickable(driver, LoginPageUI.REGISTER_LINK);
 		clickToElement(driver, LoginPageUI.REGISTER_LINK);

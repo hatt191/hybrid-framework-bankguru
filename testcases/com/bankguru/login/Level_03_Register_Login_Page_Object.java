@@ -30,7 +30,7 @@ public class Level_03_Register_Login_Page_Object {
 		driver.get("http://demo.guru99.com/v4/index.php");
 		loginPage = new LoginPageObject(driver);
 
-		loginPageUrl = loginPage.getLoginPageUrl();
+		loginPageUrl = loginPage.getPageUrl(driver);
 		loginPage.clickToRegisterLink();
 		registerPage = new RegisterPageObject(driver);
 		Assert.assertTrue(registerPage.isRegisterPageHeadingDisplayed());
