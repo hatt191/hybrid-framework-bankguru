@@ -10,10 +10,10 @@
 		</classes>
 	</test>
 
-	<test name="Run on FIREFOX">
-		<parameter name="browser" value="firefox" />
-		<classes>
-			<class name="com.liveguru.login.Level_04_Register_Login_Multi_Browsers" />
-		</classes>
-	</test>
+<!-- 	<test name="Run on FIREFOX"> -->
+<!-- 		<parameter name="browser" value="firefox" /> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.liveguru.login.Level_04_Register_Login_Multi_Browsers" /> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 </suite>
