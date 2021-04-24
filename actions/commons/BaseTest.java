@@ -1,24 +1,44 @@
 package commons;
 
+import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 public class BaseTest {
 	private WebDriver driver;
 	private String projectLocation = System.getProperty("user.dir");
 	
+	private enum BROWSER {
+		CHROME, FIREFOX, IE, SAFARI, EGDE_LEGACY, EDGE_CHROMIUM, H_CHROME, H_FIREFOX;
+	}
+	
+	private enum OS {
+		WINDOWS, MAC_OSX, LINUX;
+	}
+	
+	private enum PLATFORM {
+		ANDROID, IOS;
+	}
+	
 	protected WebDriver getBrowserDriver(String browserName) {
-		if (browserName.equalsIgnoreCase("chrome")) {
-			System.setProperty("webdriver.chrome.driver", projectLocation + "\\browserDrivers\\chromedriver.exe");
-			driver = new ChromeDriver();
-		} else if (browserName.equalsIgnoreCase("firefox")) {
-			System.setProperty("webdriver.gecko.driver", projectLocation + "\\browserDrivers\\geckodriver.exe");
+		BROWSER browser = BROWSER.valueOf(browserName.toUpperCase());
+		
+		switch (browser) {
+		case FIREFOX:
+			WebDriverManager.firefoxdriver().setup();
 			driver = new FirefoxDriver();
-		} else {
-			throw new RuntimeException("Incorrect browser name!");
+			break;
+		case CHROME:
+			WebDriverManager.chromedriver().setup();
+			driver = new ChromeDriver();
+			break;
+		default:
+			break;
 		}
 		
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
@@ -27,11 +47,12 @@ public class BaseTest {
 	}
 	
 	protected WebDriver getBrowserDriver(String browserName, String appUrl) {
-		if (browserName.equalsIgnoreCase("chrome")) {
-			System.setProperty("webdriver.chrome.driver", projectLocation + "\\browserDrivers\\chromedriver.exe");
+		BROWSER browser = BROWSER.valueOf(browserName.toUpperCase());
+		if (browser == BROWSER.CHROME) {
+			WebDriverManager.chromedriver().setup();
 			driver = new ChromeDriver();
-		} else if (browserName.equalsIgnoreCase("firefox")) {
-			System.setProperty("webdriver.gecko.driver", projectLocation + "\\browserDrivers\\geckodriver.exe");
+		} else if (browser == BROWSER.FIREFOX) {
+			WebDriverManager.firefoxdriver().setup();
 			driver = new FirefoxDriver();
 		} else {
 			throw new RuntimeException("Incorrect browser name!");
@@ -42,4 +63,10 @@ public class BaseTest {
 		driver.get(appUrl);
 		return driver;
 	}
+	
+	public static String getDirectorySlash(String folderName) {
+		String separator = File.separator;
+		return separator + folderName + separator;
+	}
+	
 }
