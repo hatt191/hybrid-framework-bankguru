@@ -21,7 +21,6 @@ public class RegisterPageObject extends BasePage {
 	public void clickToGenderMaleRadioButton() {
 		waitForElementClickable(driver, RegisterPageUI.GENDER_MALE_RADIO);
 		clickToElement(driver, RegisterPageUI.GENDER_MALE_RADIO);
-		sleepInSecond(2);
 	}
 
 	public void enterToFirstnameTextbox(String firstName) {
@@ -61,6 +60,7 @@ public class RegisterPageObject extends BasePage {
 
 	public void clickToLogoutLink() {
 		waitForElementClickable(driver, RegisterPageUI.LOGOUT_LINK);
+		sleepInSecond(1);
 		clickToElement(driver, RegisterPageUI.LOGOUT_LINK);
 	}
 
