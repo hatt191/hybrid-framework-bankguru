@@ -11,13 +11,13 @@ public class RegisterPageObject extends BasePage {
 	public RegisterPageObject(WebDriver driver) {
 		this.driver = driver;
 	}
-	
-	public boolean isRegisterPageHeadingDisplayed() {	
+
+	public boolean isRegisterPageHeadingDisplayed() {
 		waitForElementVisible(driver, RegisterPageUI.HEADING);
 		sleepInSecond(1);
 		return isElementDisplayed(driver, RegisterPageUI.HEADING);
 	}
-	
+
 	public void clickToGenderMaleRadioButton() {
 		waitForElementClickable(driver, RegisterPageUI.GENDER_MALE_RADIO);
 		clickToElement(driver, RegisterPageUI.GENDER_MALE_RADIO);
