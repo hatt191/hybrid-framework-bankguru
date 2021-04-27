@@ -4,8 +4,7 @@
 	<test name="Run on Chrome">
 		<parameter name="browser" value="chrome" />
 		<classes>
-			<class name="com.nopcommerce.login.Level_04_Register_Login_Multi_Browsers" />
-			<class name="com.nopcommerce.login.Level_05_Register_Login_Page_Factory" />
+			<class name="com.nopcommerce.login.Level_06_Register_Login_Page_Generator" />
 		</classes>
 	</test>
 </suite>

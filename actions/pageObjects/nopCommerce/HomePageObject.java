@@ -8,11 +8,6 @@ import pageUIs.nopCommerce.HomePageUI;
 public class HomePageObject extends BasePage {
 	private WebDriver driver;
 	
-	// Ham khoi tao - Contructor
-	// Khi new class len thi no se nhay vao ham khoi tao dau tien
-	// Cung ten voi Class
-	// Khong co kieu tra ve
-	// 1 Class co the co nhieu ham khoi tao, nhung phai khac nhau ve so tham so
 	public HomePageObject(WebDriver driver) {
 		this.driver = driver;
 	}
@@ -23,14 +18,16 @@ public class HomePageObject extends BasePage {
 		return isElementDisplayed(driver, HomePageUI.HOMEPAGE_SLIDER);
 	}
 
-	public void clickToRegisterLink() {
+	public RegisterPageObject clickToRegisterLink() {
 		waitForElementClickable(driver, HomePageUI.REGISTER_LINK);
 		clickToElement(driver, HomePageUI.REGISTER_LINK);
+		return PageGenerator.getRegisterPage(driver);
 	}
 
-	public void clickToLoginLink() {
+	public LoginPageObject clickToLoginLink() {
 		waitForElementClickable(driver, HomePageUI.LOGIN_LINK);
 		clickToElement(driver, HomePageUI.LOGIN_LINK);
+		return PageGenerator.getLoginPage(driver);
 	}
 
 }
