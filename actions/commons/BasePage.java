@@ -304,6 +304,12 @@ public class BasePage {
 		action.sendKeys(getElement(driver, locator), key).perform();
 	}
 
+	public void pressKeyToElement(WebDriver driver, String locator, Keys key, String... params) {
+		action = new Actions(driver);
+		locator = getDynamicLocator(locator, params);
+		action.sendKeys(getElement(driver, locator), key).perform();
+	}
+	
 	public Object executeForBrowser(WebDriver driver, String javaScript) {
 		jsExecutor = (JavascriptExecutor) driver;
 		return jsExecutor.executeScript(javaScript);
