@@ -163,6 +163,11 @@ public class BasePage {
 	public int getElementSize(WebDriver driver, String locator) {
 		return getElements(driver, locator).size();
 	}
+	
+	public int getElementSize(WebDriver driver, String locator, String... params) {
+		locator = getDynamicLocator(locator, params);
+		return getElements(driver, locator).size();
+	}
 
 	public void selectDropdownByText(WebDriver driver, String locator, String itemText) {
 		select = new Select(getElement(driver, locator));

@@ -41,4 +41,17 @@ public class HomePageObject extends BasePage {
 		return isElementDisplayed(driver, HomePageUI.ROW_VALUE_BY_FEMALES_COUNTRY_MALES_TOTAL, females, country, males, total);
 	}
 
+	public void inputToTextboxByRowNumber(String headerName, String rowIndex, String value) {
+		int columnIndex = getElementSize(driver, HomePageUI.HEADER_NAME_INDEX, headerName) + 1;
+
+		waitForElementVisible(driver, HomePageUI.TEXTBOX_BY_COLUMN_ROW_INDEX, rowIndex, String.valueOf(columnIndex));
+		sendkeyToElement(driver, HomePageUI.TEXTBOX_BY_COLUMN_ROW_INDEX, value, rowIndex, String.valueOf(columnIndex));
+	}
+
+	public void clickToIconByRowNumber(String rowIndex, String iconAction) {
+		waitForElementClickable(driver, HomePageUI.ACTION_BUTTON_BY_ROW_INDEX, rowIndex, iconAction);
+		clickToElement(driver, HomePageUI.ACTION_BUTTON_BY_ROW_INDEX, rowIndex, iconAction);
+		
+	}
+
 }

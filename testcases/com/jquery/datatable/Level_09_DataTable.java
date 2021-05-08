@@ -23,7 +23,7 @@ public class Level_09_DataTable extends BaseTest {
 
 	// @Test
 	public void Table_01_Paging() {
-		//homePage.openPageUrl(driver, "https://www.jqueryscript.net/demo/CRUD-Data-Grid-Plugin-jQuery-Quickgrid/");
+		// homePage.openPageUrl(driver, "https://www.jqueryscript.net/demo/CRUD-Data-Grid-Plugin-jQuery-Quickgrid/");
 
 		homePage.openPageByNumber("15");
 		Assert.assertTrue(homePage.isPageActiveByNumber("15"));
@@ -31,7 +31,7 @@ public class Level_09_DataTable extends BaseTest {
 		Assert.assertTrue(homePage.isPageActiveByNumber("5"));
 	}
 
-	//@Test
+	// @Test
 	public void Table_02_Input_To_Header() {
 		// Input to textbox
 		homePage.inputToHeaderTextboxByName("Females", "777");
@@ -42,37 +42,47 @@ public class Level_09_DataTable extends BaseTest {
 		homePage.refreshCurrentPage(driver);
 	}
 
-	//@Test
+	// @Test
 	public void Table_03_Actions() {
 		// Click to icon: need to be based on a unique data
 		homePage.clickToIconByCountryName("Angola", "qgrd-remove-row-btn");
 		homePage.clickToIconByCountryName("Albania", "qgrd-edit-row-btn");
 	}
 
-	//@Test
+	// @Test
 	public void Table_04_Verify_Row_Value() {
 		homePage.inputToHeaderTextboxByName("Country", "Angola");
 		Assert.assertTrue(homePage.isRowValueDisplayed("276880", "Angola", "276472", "553353"));
 		homePage.refreshCurrentPage(driver);
-		
-		homePage.inputToHeaderTextboxByName("Country", "Algeria");
-		Assert.assertTrue(homePage.isRowValueDisplayed("283821", "Algeria", "295140", "578961"));
-	}
-	
-	@Test
-	public void Table_05_Input_To_Row_Textbox() {
-		homePage.openPageUrl(driver, "https://www.jqueryscript.net/demo/jQuery-Dynamic-Data-Grid-Plugin-appendGrid/");
-		homePage = new HomePageObject(driver);
-		
-		homePage.inputToHeaderTextboxByName("Country", "Angola");
-		Assert.assertTrue(homePage.isRowValueDisplayed("276880", "Angola", "276472", "553353"));
-		homePage.refreshCurrentPage(driver);
-		
+
 		homePage.inputToHeaderTextboxByName("Country", "Algeria");
 		Assert.assertTrue(homePage.isRowValueDisplayed("283821", "Algeria", "295140", "578961"));
 	}
 
-	
+	@Test
+	public void Table_05_Input_To_Row_Textbox() {
+		homePage.inputToTextboxByRowNumber("Order Placed", "1", "5");
+		homePage.sleepInSecond(1);
+
+		homePage.inputToTextboxByRowNumber("Contact Person", "3", "John Kenedy");
+		homePage.sleepInSecond(1);
+
+		homePage.inputToTextboxByRowNumber("Company", "2", "Google");
+		homePage.sleepInSecond(1);
+	}
+
+	@Test
+	public void Table_06_Click_Icon_At_Row() {
+		homePage.clickToIconByRowNumber("2", "Move Up");
+		homePage.sleepInSecond(1);
+
+		homePage.clickToIconByRowNumber("3", "Remove Current Row");
+		homePage.sleepInSecond(1);
+
+		homePage.clickToIconByRowNumber("2", "Remove Current Row");
+		homePage.sleepInSecond(1);
+	}
+
 	@AfterClass
 	public void afterClass() {
 		driver.quit();
