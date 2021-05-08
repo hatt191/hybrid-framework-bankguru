@@ -15,11 +15,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import pageObjects.nopCommerce.MyAccountPageObject;
-import pageObjects.nopCommerce.OrderPageObject;
-import pageObjects.nopCommerce.PageGenerator;
-import pageObjects.nopCommerce.SearchPageObject;
-import pageUIs.nopCommerce.BasePageUI;
+import pageObjects.user.nopCommerce.MyAccountPageObject;
+import pageObjects.user.nopCommerce.OrderPageObject;
+import pageObjects.user.nopCommerce.PageGenerator;
+import pageObjects.user.nopCommerce.SearchPageObject;
+import pageUIs.user.nopCommerce.BasePageUI;
 
 public class BasePage {
 

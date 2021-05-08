@@ -10,9 +10,9 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import commons.BaseTest;
-import pageObjects.nopCommerce.HomePageObject;
-import pageObjects.nopCommerce.LoginPageObject;
-import pageObjects.nopCommerce.RegisterPageObject;
+import pageObjects.user.nopCommerce.HomePageObject;
+import pageObjects.user.nopCommerce.LoginPageObject;
+import pageObjects.user.nopCommerce.RegisterPageObject;
 
 public class Level_04_Register_Login_Multi_Browsers extends BaseTest {
 	WebDriver driver;

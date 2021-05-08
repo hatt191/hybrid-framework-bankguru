@@ -1,4 +1,4 @@
-package pageUIs.nopCommerce;
+package pageUI.admin.nopCommerce;
 
 public class LoginPageUI {
 	public static final String HEADING = "//h1[text()='Welcome, Please Sign In!']";

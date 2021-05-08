@@ -1,4 +1,4 @@
-package pageObject.jQuery;
+package pageObjects.jQuery;
 
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
