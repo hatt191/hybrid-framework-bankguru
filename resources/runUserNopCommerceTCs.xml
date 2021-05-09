@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Nop Commerce" parallel="false">
+	<parameter name="url" value="https://demo.nopcommerce.com/" />
+	<test name="Run on Chrome">
+		<parameter name="browser" value="chrome" />
+		<classes>
+			<class name="com.nopcommerce.login.Level_08_Register_Login_Page_Dynamic_Locator" />
+		</classes>
+	</test>
+</suite>
