@@ -19,7 +19,8 @@ import pageObjects.user.nopCommerce.MyAccountPageObject;
 import pageObjects.user.nopCommerce.OrderPageObject;
 import pageObjects.user.nopCommerce.PageGenerator;
 import pageObjects.user.nopCommerce.SearchPageObject;
-import pageUIs.user.nopCommerce.BasePageUI;
+import pageUI.admin.nopCommerce.AdminBasePageUI;
+import pageUIs.user.nopCommerce.UserBasePageUI;
 
 public class BasePage {
 
@@ -133,6 +134,10 @@ public class BasePage {
 		return driver.findElement(getByXpath(locator));
 	}
 
+	public WebElement getElement(WebDriver driver, String locator, String... params) {
+		return driver.findElement(getByXpath(getDynamicLocator(locator, params)));
+	}
+
 	public List<WebElement> getElements(WebDriver driver, String locator) {
 		return driver.findElements(getByXpath(locator));
 	}
@@ -163,7 +168,7 @@ public class BasePage {
 	public int getElementSize(WebDriver driver, String locator) {
 		return getElements(driver, locator).size();
 	}
-	
+
 	public int getElementSize(WebDriver driver, String locator, String... params) {
 		locator = getDynamicLocator(locator, params);
 		return getElements(driver, locator).size();
@@ -237,6 +242,11 @@ public class BasePage {
 	}
 
 	public String getElementAttributeValue(WebDriver driver, String locator, String attributeName) {
+		return getElement(driver, locator).getAttribute(attributeName);
+	}
+
+	public String getElementAttributeValue(WebDriver driver, String locator, String attributeName, String... params) {
+		locator = getDynamicLocator(locator, params);
 		return getElement(driver, locator).getAttribute(attributeName);
 	}
 
@@ -314,7 +324,7 @@ public class BasePage {
 		locator = getDynamicLocator(locator, params);
 		action.sendKeys(getElement(driver, locator), key).perform();
 	}
-	
+
 	public Object executeForBrowser(WebDriver driver, String javaScript) {
 		jsExecutor = (JavascriptExecutor) driver;
 		return jsExecutor.executeScript(javaScript);
@@ -445,27 +455,28 @@ public class BasePage {
 		explicitWait.until(ExpectedConditions.invisibilityOfElementLocated(getByXpath(getDynamicLocator(locator, params))));
 	}
 
+	// User - Nopcommerce
 	public SearchPageObject openSearchPage(WebDriver driver) {
-		waitForElementClickable(driver, BasePageUI.SEARCH_PAGE_FOOTER);
-		clickToElement(driver, BasePageUI.SEARCH_PAGE_FOOTER);
+		waitForElementClickable(driver, UserBasePageUI.SEARCH_PAGE_FOOTER);
+		clickToElement(driver, UserBasePageUI.SEARCH_PAGE_FOOTER);
 		return PageGenerator.getSearchPage(driver);
 	}
 
 	public MyAccountPageObject openMyAccountPage(WebDriver driver) {
-		waitForElementClickable(driver, BasePageUI.MY_ACCOUNT_PAGE_FOOTER);
-		clickToElement(driver, BasePageUI.MY_ACCOUNT_PAGE_FOOTER);
+		waitForElementClickable(driver, UserBasePageUI.MY_ACCOUNT_PAGE_FOOTER);
+		clickToElement(driver, UserBasePageUI.MY_ACCOUNT_PAGE_FOOTER);
 		return PageGenerator.getMyAccountPage(driver);
 	}
 
 	public OrderPageObject openOrderPage(WebDriver driver) {
-		waitForElementClickable(driver, BasePageUI.ORDER_PAGE_FOOTER);
-		clickToElement(driver, BasePageUI.ORDER_PAGE_FOOTER);
+		waitForElementClickable(driver, UserBasePageUI.ORDER_PAGE_FOOTER);
+		clickToElement(driver, UserBasePageUI.ORDER_PAGE_FOOTER);
 		return PageGenerator.getOrderPage(driver);
 	}
 
 	public BasePage getFooterPageByName(WebDriver driver, String pageName) {
-		waitForElementClickable(driver, BasePageUI.DYNAMIC_PAGE_FOOTER, pageName);
-		clickToElement(driver, BasePageUI.DYNAMIC_PAGE_FOOTER, pageName);
+		waitForElementClickable(driver, UserBasePageUI.DYNAMIC_PAGE_FOOTER, pageName);
+		clickToElement(driver, UserBasePageUI.DYNAMIC_PAGE_FOOTER, pageName);
 		switch (pageName) {
 		case "Search":
 			return PageGenerator.getSearchPage(driver);
@@ -477,9 +488,31 @@ public class BasePage {
 	}
 
 	public void openFooterPageByName(WebDriver driver, String pageName) {
-		waitForElementClickable(driver, BasePageUI.DYNAMIC_PAGE_FOOTER, pageName);
-		clickToElement(driver, BasePageUI.DYNAMIC_PAGE_FOOTER, pageName);
+		waitForElementClickable(driver, UserBasePageUI.DYNAMIC_PAGE_FOOTER, pageName);
+		clickToElement(driver, UserBasePageUI.DYNAMIC_PAGE_FOOTER, pageName);
+	}
 
+	// Admmin - Nopcommerce
+	public void openSubMenuPageByName(WebDriver driver, String menuPageName, String subMenuPageName) {
+		waitForElementClickable(driver, AdminBasePageUI.DYNAMIC_MENU_BY_NAME, menuPageName);
+		clickToElement(driver, AdminBasePageUI.DYNAMIC_MENU_BY_NAME, menuPageName);
+		waitForElementClickable(driver, AdminBasePageUI.DYNAMIC_SUB_MENU_BY_NAME, subMenuPageName);
+		clickToElement(driver, AdminBasePageUI.DYNAMIC_SUB_MENU_BY_NAME, subMenuPageName);
+	}
+
+	public void uploadFileAtCardName(WebDriver driver, String cardName, String... fileNames) {
+		String filePath = GlobalConstants.UPLOAD_FOLDER_PATH;
+		String fullFileName = "";
+		for (String file : fileNames) {
+			fullFileName = fullFileName + filePath + file + "\n";
+		}
+		fullFileName = fullFileName.trim();
+		getElement(driver, AdminBasePageUI.UPLOAD_FILE_BY_CARD_NAME, cardName).sendKeys(fullFileName);
+	}
+
+	public boolean isMessageDisplayedInEmptyTable(WebDriver driver, String tableName) {
+		waitForElementVisible(driver, AdminBasePageUI.NO_DATA_MESSAGE_BY_TABLE_NAME, tableName);
+		return isElementDisplayed(driver, AdminBasePageUI.NO_DATA_MESSAGE_BY_TABLE_NAME, tableName);
 	}
 
 	private Alert alert;

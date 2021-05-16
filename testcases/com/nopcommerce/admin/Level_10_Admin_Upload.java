@@ -1,7 +1,5 @@
 package com.nopcommerce.admin;
 
-import java.util.Random;
-
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -18,6 +16,11 @@ import pageObjects.admin.nopCommerce.ProductListPageObject;
 
 public class Level_10_Admin_Upload extends BaseTest {
 	WebDriver driver;
+	String productName = "Adobe Photoshop CS4" ;
+	String productImage = "product-name.png";
+	String productAlt = "Avatar Alt";
+	String productTitle = "Avatar Title";
+	String productOrderDisplay = "0";
 
 	@Parameters({ "browser", "url" })
 	@BeforeClass
@@ -31,12 +34,15 @@ public class Level_10_Admin_Upload extends BaseTest {
 		dashboardPage = loginPage.clickToLoginButton();
 		Assert.assertTrue(dashboardPage.isDashboardHeaderDisplayed());
 
-		productListPage = dashboardPage.openSubMenuPageByName("Catalog", "Products");
+		dashboardPage.openSubMenuPageByName(driver, "Catalog", "Products");
+		productListPage = PageGeneratorManager.getProductListPage(driver);
 		Assert.assertTrue(productListPage.isProductListHeaderDisplayed());
-		productListPage.enterToProductNameTextbox("Adobe Photoshop CS4");
+		
+		productListPage.expandSearchPanel();
+		productListPage.enterToProductNameTextbox(productName);
 		productListPage.clickToSearchButton();
 
-		productDetailsPage = productListPage.clickToEditButtonByProductName("Adobe Photoshop CS4");
+		productDetailsPage = productListPage.clickToEditButtonByProductName(productName);
 		Assert.assertTrue(productDetailsPage.isProductDetailsHeaderDisplayed());
 
 	}
@@ -44,35 +50,37 @@ public class Level_10_Admin_Upload extends BaseTest {
 	@Test
 	public void Admin_01_Upload_File() {
 		productDetailsPage.clickToExpandPanelByName("Pictures");
-		productDetailsPage.uploadPictureByFileName("");
-		Assert.assertTrue(productDetailsPage.isPictureUploadedSuccessfullyByFileName(""));
+		productDetailsPage.uploadFileAtCardName(driver, "pictures", productImage);
+		Assert.assertTrue(productDetailsPage.isPictureUploadedSuccessfullyByFileName(productImage));
 
-		productDetailsPage.enterToAltTextbox("");
-		productDetailsPage.enterToTitleTextbox("");
-		productDetailsPage.enterToDisplayedOrderTextbox("");
+		productDetailsPage.enterToAltTextbox(productAlt);
+		productDetailsPage.enterToTitleTextbox(productTitle);
+		//productDetailsPage.enterToDisplayedOrderTextbox(productOrderDisplay);
 
 		productDetailsPage.clickToAddProductPictureButton();
 
-		Assert.assertTrue(productDetailsPage.isPictureImageDisplayed("", "", "", ""));
+		Assert.assertTrue(productDetailsPage.isPictureImageDisplayed(productName, productOrderDisplay, productAlt, productTitle));
 		productListPage = productDetailsPage.clickToSaveButton();
-		Assert.assertTrue(productListPage.isSuccessMessageDisplayed("The product has been updated successfully"));
-		productListPage.enterToProductNameTextbox("Adobe Photoshop CS4");
+		Assert.assertTrue(productListPage.isSuccessMessageDisplayed("The product has been updated successfully."));
+		productListPage.expandSearchPanel();
+		productListPage.enterToProductNameTextbox(productName);
 		productListPage.clickToSearchButton();
 
-		Assert.assertTrue(productListPage.isPictureImageUpdated("adobe-photoshop-cs4", "Adobe Photoshop CS4"));
+		Assert.assertTrue(productListPage.isPictureImageUpdated(productName, productName));
 
-		productDetailsPage = productListPage.clickToEditButtonByProductName("Adobe Photoshop CS4");
+		productDetailsPage = productListPage.clickToEditButtonByProductName(productName);
 		Assert.assertTrue(productDetailsPage.isProductDetailsHeaderDisplayed());
 		productDetailsPage.clickToExpandPanelByName("Pictures");
 
-		productDetailsPage.clickToDeleteButtonAtPictureName("");
-		Assert.assertTrue(productDetailsPage.isMessageDisplayedInTable("No data available in table"));
+		productDetailsPage.clickToDeleteButtonAtPictureName(productTitle);
+		Assert.assertTrue(productDetailsPage.isMessageDisplayedInEmptyTable(driver, "productpictures"));
 		productListPage = productDetailsPage.clickToSaveButton();
 		Assert.assertTrue(productListPage.isSuccessMessageDisplayed("The product has been updated successfully"));
-		productListPage.enterToProductNameTextbox("Adobe Photoshop CS4");
+		productListPage.expandSearchPanel();
+		productListPage.enterToProductNameTextbox(productName);
 		productListPage.clickToSearchButton();
 
-		Assert.assertTrue(productListPage.isPictureImageUpdated("default-image", "Adobe Photoshop CS4"));
+		Assert.assertTrue(productListPage.isPictureImageUpdated("default-image", productName));
 	}
 
 	@AfterClass

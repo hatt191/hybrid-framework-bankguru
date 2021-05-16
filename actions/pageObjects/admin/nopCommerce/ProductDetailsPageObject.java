@@ -3,73 +3,71 @@ package pageObjects.admin.nopCommerce;
 import org.openqa.selenium.WebDriver;
 
 import commons.BasePage;
-import pageUIs.user.nopCommerce.LoginPageUI;
+import pageUI.admin.nopCommerce.ProductDetailsPageUI;
 
 public class ProductDetailsPageObject extends BasePage {
 	private WebDriver driver;
-	
+
 	public ProductDetailsPageObject(WebDriver driver) {
 		this.driver = driver;
 	}
 
 	public boolean isProductDetailsHeaderDisplayed() {
-		// TODO Auto-generated method stub
-		return false;
+		waitForElementVisible(driver, ProductDetailsPageUI.HEADER);
+		return isElementDisplayed(driver, ProductDetailsPageUI.HEADER);
 	}
 
-	public void clickToExpandPanelByName(String string) {
-		// TODO Auto-generated method stub
-		
+	public void clickToExpandPanelByName(String panelName) {
+		waitForElementVisible(driver, ProductDetailsPageUI.TOOGLE_ICON_BY_CARD_NAME, panelName);
+		String toggleIconStatus = getElementAttributeValue(driver, ProductDetailsPageUI.TOOGLE_ICON_BY_CARD_NAME, "class", panelName);
+		if (toggleIconStatus.contains("fa-plus")) {
+			waitForElementClickable(driver, ProductDetailsPageUI.TOOGLE_ICON_BY_CARD_NAME, panelName);
+			clickToElement(driver, ProductDetailsPageUI.TOOGLE_ICON_BY_CARD_NAME, panelName);
+		}
 	}
 
-	public void uploadPictureByFileName(String string) {
-		// TODO Auto-generated method stub
-		
+	public boolean isPictureUploadedSuccessfullyByFileName(String fileName) {
+		fileName = fileName.split("\\.")[0];
+		waitForElementVisible(driver, ProductDetailsPageUI.PRODUCT_IMAGE_ADD_NEW_BY_FILE_NAME, fileName);
+		return isElementDisplayed(driver, ProductDetailsPageUI.PRODUCT_IMAGE_ADD_NEW_BY_FILE_NAME, fileName);
 	}
 
-	public boolean isPictureUploadedSuccessfullyByFileName(String string) {
-		// TODO Auto-generated method stub
-		return false;
+	public void enterToAltTextbox(String altValue) {
+		waitForElementVisible(driver, ProductDetailsPageUI.ALT_TEXTBOX_ADD_NEW_PRODUCT_IMAGE);
+		sendkeyToElement(driver, ProductDetailsPageUI.ALT_TEXTBOX_ADD_NEW_PRODUCT_IMAGE, altValue);
 	}
 
-	public void enterToAltTextbox(String string) {
-		// TODO Auto-generated method stub
-		
+	public void enterToTitleTextbox(String titleValue) {
+		waitForElementVisible(driver, ProductDetailsPageUI.TITLE_TEXTBOX_ADD_NEW_PRODUCT_IMAGE);
+		sendkeyToElement(driver, ProductDetailsPageUI.TITLE_TEXTBOX_ADD_NEW_PRODUCT_IMAGE, titleValue);
 	}
 
-	public void enterToTitleTextbox(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void enterToDisplayedOrderTextbox(String string) {
-		// TODO Auto-generated method stub
-		
+	public void enterToDisplayedOrderTextbox(String displayOrderValue) {
+		waitForElementVisible(driver, ProductDetailsPageUI.DISPLAY_ORDER_TEXTBOX_ADD_NEW_PRODUCT_IMAGE);
+		sendkeyToElement(driver, ProductDetailsPageUI.DISPLAY_ORDER_TEXTBOX_ADD_NEW_PRODUCT_IMAGE, displayOrderValue);
 	}
 
 	public void clickToAddProductPictureButton() {
-		// TODO Auto-generated method stub
-		
+		waitForElementClickable(driver, ProductDetailsPageUI.ADD_PRODUCT_IMAGE_BUTTON);
+		clickToElement(driver, ProductDetailsPageUI.ADD_PRODUCT_IMAGE_BUTTON);
 	}
 
-	public boolean isPictureImageDisplayed(String string, String string2, String string3, String string4) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isPictureImageDisplayed(String imageName, String displayOrder, String imageAlt, String imageTitle) {
+		imageName = imageName.replace(" ", "-").toLowerCase();
+		waitForElementVisible(driver, ProductDetailsPageUI.PICTURE_TABLE_BY_NAME_ORDER_ALT_TITLE, imageName, displayOrder, imageAlt, imageTitle);
+		return isElementDisplayed(driver, ProductDetailsPageUI.PICTURE_TABLE_BY_NAME_ORDER_ALT_TITLE, imageName, displayOrder, imageAlt, imageTitle);
 	}
 
 	public ProductListPageObject clickToSaveButton() {
-		// TODO Auto-generated method stub
-		return null;
+		waitForElementClickable(driver, ProductDetailsPageUI.SAVE_BUTTON);
+		clickToElement(driver, ProductDetailsPageUI.SAVE_BUTTON);
+		return PageGeneratorManager.getProductListPage(driver);
 	}
 
-	public void clickToDeleteButtonAtPictureName(String string) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public boolean isMessageDisplayedInTable(String string) {
-		// TODO Auto-generated method stub
-		return false;
+	public void clickToDeleteButtonAtPictureName(String imageTitle) {
+		waitForElementClickable(driver, ProductDetailsPageUI.DELETE_BUTTON_BY_IMAGE_TITLE, imageTitle);
+		clickToElement(driver, ProductDetailsPageUI.DELETE_BUTTON_BY_IMAGE_TITLE, imageTitle);
+		acceptAlert(driver);
 	}
 
 }
