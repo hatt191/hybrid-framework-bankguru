@@ -20,7 +20,7 @@ public class Level_10_Admin_Upload extends BaseTest {
 	String productImage = "product-name.png";
 	String productAlt = "Avatar Alt";
 	String productTitle = "Avatar Title";
-	String productOrderDisplay = "0";
+	String productOrderDisplay = "1";
 
 	@Parameters({ "browser", "url" })
 	@BeforeClass
@@ -55,7 +55,7 @@ public class Level_10_Admin_Upload extends BaseTest {
 
 		productDetailsPage.enterToAltTextbox(productAlt);
 		productDetailsPage.enterToTitleTextbox(productTitle);
-		//productDetailsPage.enterToDisplayedOrderTextbox(productOrderDisplay);
+		productDetailsPage.clickToUpDownDisplayedOrderTextbox("Increase value");
 
 		productDetailsPage.clickToAddProductPictureButton();
 

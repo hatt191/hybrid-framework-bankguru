@@ -42,9 +42,9 @@ public class ProductDetailsPageObject extends BasePage {
 		sendkeyToElement(driver, ProductDetailsPageUI.TITLE_TEXTBOX_ADD_NEW_PRODUCT_IMAGE, titleValue);
 	}
 
-	public void enterToDisplayedOrderTextbox(String displayOrderValue) {
-		waitForElementVisible(driver, ProductDetailsPageUI.DISPLAY_ORDER_TEXTBOX_ADD_NEW_PRODUCT_IMAGE);
-		sendkeyToElement(driver, ProductDetailsPageUI.DISPLAY_ORDER_TEXTBOX_ADD_NEW_PRODUCT_IMAGE, displayOrderValue);
+	public void clickToUpDownDisplayedOrderTextbox(String selectValue) {
+		waitForElementClickable(driver, ProductDetailsPageUI.DISPLAY_ORDER_UP_DOWN, selectValue);
+		clickToElement(driver, ProductDetailsPageUI.DISPLAY_ORDER_UP_DOWN, selectValue);
 	}
 
 	public void clickToAddProductPictureButton() {
