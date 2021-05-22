@@ -41,7 +41,7 @@ public class BaseTest {
 			break;
 		}
 		
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(longTimeout, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		return driver;
 	}
@@ -58,7 +58,7 @@ public class BaseTest {
 			throw new RuntimeException("Incorrect browser name!");
 		}
 		
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(longTimeout, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		driver.get(appUrl);
 		return driver;
@@ -68,5 +68,7 @@ public class BaseTest {
 		String separator = File.separator;
 		return separator + folderName + separator;
 	}
+	
+	private long longTimeout = GlobalConstants.LONG_TIMEOUT;
 	
 }
