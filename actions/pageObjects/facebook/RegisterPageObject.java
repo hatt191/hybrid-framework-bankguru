@@ -33,4 +33,8 @@ public class RegisterPageObject extends BasePage {
 		return isElementUndisplayed(driver, pageUIs.facebook.RegisterPageUI.LOGIN_BUTTON);
 	}
 
+	public boolean isConfirmEmailTextboxUndisplayed() {
+		return isElementUndisplayed(driver, pageUIs.facebook.RegisterPageUI.CONFIRM_EMAIL_TEXTBOX);
+	}
+
 }
