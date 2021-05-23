@@ -14,7 +14,9 @@ public class RegisterPageObject extends BasePage {
 
 	public boolean isRegisterPageHeadingDisplayed() {
 		waitForElementVisible(driver, RegisterPageUI.HEADING);
-		sleepInSecond(1);
+		if (driver.toString().contains("chrome") || driver.toString().contains("edge")) {
+			sleepInSecond(1);
+		}
 		return isElementDisplayed(driver, RegisterPageUI.HEADING);
 	}
 
@@ -60,8 +62,10 @@ public class RegisterPageObject extends BasePage {
 
 	public HomePageObject clickToLogoutLink() {
 		waitForElementClickable(driver, RegisterPageUI.LOGOUT_LINK);
-		sleepInSecond(1);
 		clickToElement(driver, RegisterPageUI.LOGOUT_LINK);
+		if (driver.toString().contains("chrome") || driver.toString().contains("edge")) {
+			sleepInSecond(1);
+		}
 		return PageGenerator.getHomePage(driver);
 	}
 

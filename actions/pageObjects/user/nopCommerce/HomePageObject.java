@@ -14,7 +14,9 @@ public class HomePageObject extends BasePage {
 	
 	public boolean isHomePageSliderDisplayed() {	
 		waitForElementVisible(driver, HomePageUI.HOMEPAGE_SLIDER);
-		sleepInSecond(1);
+		if (driver.toString().contains("chrome") || driver.toString().contains("edge")) {
+			sleepInSecond(1);
+		}
 		return isElementDisplayed(driver, HomePageUI.HOMEPAGE_SLIDER);
 	}
 
@@ -27,6 +29,9 @@ public class HomePageObject extends BasePage {
 	public LoginPageObject clickToLoginLink() {
 		waitForElementClickable(driver, HomePageUI.LOGIN_LINK);
 		clickToElement(driver, HomePageUI.LOGIN_LINK);
+		if (driver.toString().contains("chrome") || driver.toString().contains("edge")) {
+			sleepInSecond(1);
+		}
 		return PageGenerator.getLoginPage(driver);
 	}
 

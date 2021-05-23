@@ -14,7 +14,9 @@ public class LoginPageObject extends BasePage {
 	
 	public boolean isLoginPageHeadingDisplayed() {	
 		waitForElementVisible(driver, LoginPageUI.HEADING);
-		sleepInSecond(1);
+		if (driver.toString().contains("chrome") || driver.toString().contains("edge")) {
+			sleepInSecond(1);
+		}
 		return isElementDisplayed(driver, LoginPageUI.HEADING);
 	}
 	
