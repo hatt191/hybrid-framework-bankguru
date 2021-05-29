@@ -47,7 +47,12 @@ public class ReportNGListener implements ITestListener {
 
 		String screenshotPath = captureScreenshot(driver, result.getName());
 		Reporter.getCurrentTestResult();
-		Reporter.log("<br><a target=\"_blank\" href=\"file:///" + screenshotPath + "\">" + "<img src=\"file:///" + screenshotPath + "\" " + "height='100' width='150'/> " + "</a></br>");
+		
+		/*
+		 *	var newTab = window.open();
+			newTab.document.body.innerHTML = '<img src="data:image/png;base64," width="100px" height="100px">';
+		 */
+		Reporter.log("<br><a target=\"_blank\" href=\"data:image/png;base64," + screenshotPath + "\">" + "<img src=\"data:image/png;base64," + screenshotPath + "\" " + "height='100' width='150'/> " + "</a></br>");
 		Reporter.setCurrentTestResult(null);
 	}
 
@@ -70,17 +75,13 @@ public class ReportNGListener implements ITestListener {
 	}
 
 	public String captureScreenshot(WebDriver driver, String screenshotName) {
-		try {
-			Calendar calendar = Calendar.getInstance();
-			SimpleDateFormat formater = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
-			File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-			String screenPath = projectScreenshot + screenshotName + "_" + formater.format(calendar.getTime()) + ".png";
-			FileUtils.copyFile(source, new File(screenPath));
-			return screenPath;
-		} catch (IOException e) {
-			System.out.println("Exception while taking screenshot: " + e.getMessage());
-			return e.getMessage();
-		}
+			//Calendar calendar = Calendar.getInstance();
+			//SimpleDateFormat formater = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+			//File source = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			String screenshotBase64 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+			//String screenPath = projectScreenshot + screenshotName + "_" + formater.format(calendar.getTime()) + ".png";
+			//FileUtils.copyFile(source, new File(screenPath));
+			return screenshotBase64;
 	}
 
 }

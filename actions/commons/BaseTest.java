@@ -10,12 +10,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.Reporter;
+import org.testng.annotations.BeforeTest;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseTest {
 	private WebDriver driver;
-	private String projectLocation = System.getProperty("user.dir");
 	protected final Log log;
 	
 	protected BaseTest() {
@@ -142,6 +142,29 @@ public class BaseTest {
 
 	protected boolean verifyEquals(Object actual, Object expected) {
 		return checkEquals(actual, expected);
+	}
+	
+	//@BeforeTest
+	public void deleteAllfilesInReportNGScreenshot() {
+		log.info("---------- START delete files in folder ----------");
+		deleteAllFilesInFolder();
+		log.info("---------- END delete files in folder ----------");
+	}
+	
+	public void deleteAllFilesInFolder() {
+		try {
+			String workingDir = GlobalConstants.PROJECT_PATH;
+			String pathFolderDownload = workingDir + File.separator + "ReportNGScreenShots";
+			File file = new File(pathFolderDownload);
+			File[] listOfFiles = file.listFiles();
+			for (int i = 0; i < listOfFiles.length; i++) {
+				if (listOfFiles[i].isFile()) {
+					new File(listOfFiles[i].toString()).delete();
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	private long longTimeout = GlobalConstants.LONG_TIMEOUT;
