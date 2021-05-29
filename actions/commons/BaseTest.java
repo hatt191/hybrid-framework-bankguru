@@ -73,6 +73,10 @@ public class BaseTest {
 		return driver;
 	}
 	
+	public WebDriver getWebDriver() {
+		return this.driver;
+	}
+	
 	public static String getDirectorySlash(String folderName) {
 		String separator = File.separator;
 		return separator + folderName + separator;
