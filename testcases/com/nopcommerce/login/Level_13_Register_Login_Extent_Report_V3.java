@@ -3,11 +3,11 @@ package com.nopcommerce.login;
 import java.util.Random;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+
 
 import commons.BaseTest;
 import pageObjects.user.nopCommerce.HomePageObject;
@@ -18,23 +18,21 @@ import pageObjects.user.nopCommerce.PageGenerator;
 import pageObjects.user.nopCommerce.RegisterPageObject;
 import pageObjects.user.nopCommerce.SearchPageObject;
 
-public class Level_13_Register_Login_Extent_Report extends BaseTest {
+public class Level_13_Register_Login_Extent_Report_V3 extends BaseTest {
 	WebDriver driver;
 	String email, password;
 
 	@Parameters({ "browser", "url" })
 	@BeforeClass
 	public void beforeClass(String browserName, String appUrl) {
-		log.info("Pre-Condition: Open browser '" + browserName + "' and navigate to '" + appUrl + "'");
 		driver = getBrowserDriver(browserName, appUrl);
 		
-
 		email = getRandomEmail();
 		password = "123456";
 	}
 
 	@Test
-	public void Login_01_Register_To_System() {
+	public void User_01_Register_To_System() {
 		log.info("User_01_Register - Step 01: Verify Home Page is displayed");
 		homePage = PageGenerator.getHomePage(driver);
 		verifyTrue(homePage.isHomePageSliderDisplayed());
@@ -75,7 +73,7 @@ public class Level_13_Register_Login_Extent_Report extends BaseTest {
 	}
 
 	@Test
-	public void Login_02_Login_To_System() {
+	public void User_02_Login_To_System() {
 		log.info("User_02_Login - Step 01: Click to Login link");
 		loginPage = homePage.clickToLoginLink();
 
@@ -95,7 +93,6 @@ public class Level_13_Register_Login_Extent_Report extends BaseTest {
 
 	@AfterClass
 	public void afterClass() {
-		log.info("Post-Condition: Close browser");
 		driver.quit();
 	}
 

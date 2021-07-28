@@ -13,7 +13,7 @@
 	<test name="Run on Firefox">
 		<parameter name="browser" value="firefox" />
 		<classes>
-			<class name="com.nopcommerce.login.Level_13_Register_Login_Log_ReportNG" />
+			<class name="com.nopcommerce.login.Level_13_Register_Login_Extent_Report_V3" />
 		</classes>
 	</test>
 

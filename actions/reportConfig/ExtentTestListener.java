@@ -1,61 +1,49 @@
 package reportConfig;
 
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
-import com.relevantcodes.extentreports.LogStatus;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 
-import commons.BaseTest;
-
-public class ExtentTestListener extends BaseTest implements ITestListener {
+public class ExtentTestListener implements ITestListener {
+	private static ExtentReports extent = ExtentManager.createInstance();
+	private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
 
 	@Override
-	public void onStart(ITestContext context) {
-		System.out.println("---------- " + context.getName() + " STARTED test ----------");
-		context.setAttribute("WebDriver", this.getWebDriver());
+	public synchronized void onStart(ITestContext context) {
+		
 	}
 
 	@Override
-	public void onFinish(ITestContext context) {
-		System.out.println("---------- " + context.getName() + " FINISHED test ----------");
-		ExtentTestManager.endTest();
-		ExtentManager.getReporter().flush();
+	public synchronized void onFinish(ITestContext context) {
+		extent.flush();
 	}
 
 	@Override
-	public void onTestStart(ITestResult result) {
-		System.out.println("---------- " + result.getName() + " STARTED test ----------");
+	public synchronized void onTestStart(ITestResult result) {
+		ExtentTest extentTest = extent.createTest(result.getMethod().getMethodName(), result.getMethod().getDescription());
+		test.set(extentTest);
 	}
 
 	@Override
-	public void onTestSuccess(ITestResult result) {
-		System.out.println("---------- " + result.getName() + " SUCCESS test ----------");
-		ExtentTestManager.getTest().log(LogStatus.PASS, "Test passed");
+	public synchronized void onTestSuccess(ITestResult result) {
+		test.get().pass("Test passed");
 	}
 
 	@Override
-	public void onTestFailure(ITestResult result) {
-		System.out.println("---------- " + result.getName() + " FAILED test ----------");
-
-		Object testClass = result.getInstance();
-		WebDriver webDriver = ((BaseTest) testClass).getWebDriver();
-		String base64Screenshot = "data:image/png;base64," + ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BASE64);
-		ExtentTestManager.getTest().log(LogStatus.FAIL, "Test Failed", ExtentTestManager.getTest().addBase64ScreenShot(base64Screenshot));
+	public synchronized void onTestFailure(ITestResult result) {
+		test.get().fail(result.getThrowable());
 	}
 
 	@Override
-	public void onTestSkipped(ITestResult result) {
-		System.out.println("---------- " + result.getName() + " SKIPPED test ----------");
-		ExtentTestManager.getTest().log(LogStatus.SKIP, "Test Skipped");
+	public synchronized void onTestSkipped(ITestResult result) {
+		test.get().skip(result.getThrowable());
 	}
 
 	@Override
 	public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-		System.out.println("---------- " + result.getName() + " FAILED WITH SUCCESS PERCENTAGE test ----------");
+		System.out.println(("onTestFailedButWithinSuccessPercentage for " + result.getMethod().getMethodName()));
 	}
-
 }
