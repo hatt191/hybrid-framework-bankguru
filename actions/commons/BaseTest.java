@@ -1,6 +1,7 @@
 package commons;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
@@ -10,33 +11,33 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.Reporter;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterSuite;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseTest {
 	private WebDriver driver;
 	protected final Log log;
-	
+
 	protected BaseTest() {
 		log = LogFactory.getLog(getClass());
 	}
-	
+
 	private enum BROWSER {
 		CHROME, FIREFOX, IE, SAFARI, EGDE_LEGACY, EDGE_CHROMIUM, H_CHROME, H_FIREFOX;
 	}
-	
+
 	private enum OS {
 		WINDOWS, MAC_OSX, LINUX;
 	}
-	
+
 	private enum PLATFORM {
 		ANDROID, IOS;
 	}
-	
+
 	protected WebDriver getBrowserDriver(String browserName) {
 		BROWSER browser = BROWSER.valueOf(browserName.toUpperCase());
-		
+
 		switch (browser) {
 		case FIREFOX:
 			WebDriverManager.firefoxdriver().setup();
@@ -49,12 +50,12 @@ public class BaseTest {
 		default:
 			break;
 		}
-		
+
 		driver.manage().timeouts().implicitlyWait(longTimeout, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		return driver;
 	}
-	
+
 	protected WebDriver getBrowserDriver(String browserName, String appUrl) {
 		BROWSER browser = BROWSER.valueOf(browserName.toUpperCase());
 		if (browser == BROWSER.CHROME) {
@@ -66,22 +67,22 @@ public class BaseTest {
 		} else {
 			throw new RuntimeException("Incorrect browser name!");
 		}
-		
+
 		driver.manage().timeouts().implicitlyWait(longTimeout, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		driver.get(appUrl);
 		return driver;
 	}
-	
+
 	public WebDriver getWebDriver() {
 		return this.driver;
 	}
-	
+
 	public static String getDirectorySlash(String folderName) {
 		String separator = File.separator;
 		return separator + folderName + separator;
 	}
-	
+
 	private boolean checkTrue(boolean condition) {
 		boolean pass = true;
 		try {
@@ -143,14 +144,14 @@ public class BaseTest {
 	protected boolean verifyEquals(Object actual, Object expected) {
 		return checkEquals(actual, expected);
 	}
-	
-	//@BeforeTest
+
+	// @BeforeTest
 	public void deleteAllfilesInReportNGScreenshot() {
 		log.info("---------- START delete files in folder ----------");
 		deleteAllFilesInFolder();
 		log.info("---------- END delete files in folder ----------");
 	}
-	
+
 	public void deleteAllFilesInFolder() {
 		try {
 			String workingDir = GlobalConstants.PROJECT_PATH;
@@ -166,7 +167,67 @@ public class BaseTest {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
+	protected void cleanBrowser() {
+
+		// Browser
+		if (driver != null) {
+			// IE browser
+			driver.manage().deleteAllCookies();
+			driver.quit();
+		}
+
+	}
+
+	@AfterSuite(alwaysRun = true)
+	protected void cleandExecutableDriver() {
+		String cmd = "";
+		try {
+
+			// Executable Browser
+			// Get ra tên của OS và convert qua chữ thường
+			String osName = System.getProperty("os.name").toLowerCase();
+			log.info("OS name = " + osName);
+
+			// Quit driver executable file in Task Manager
+			if (driver.toString().toLowerCase().contains("chrome")) {
+				if (osName.contains("windows")) {
+					cmd = "taskkill /F /FI \"IMAGENAME eq chromedriver*\"";
+				} else {
+					cmd = "pkill chromedriver";
+				}
+			} else if (driver.toString().toLowerCase().contains("internetexplorer")) {
+				if (osName.contains("window")) {
+					cmd = "taskkill /F /FI \"IMAGENAME eq IEDriverServer*\"";
+				}
+			} else if (driver.toString().toLowerCase().contains("firefox")) {
+				if (osName.contains("windows")) {
+					cmd = "taskkill /F /FI \"IMAGENAME eq geckodriver*\"";
+				} else {
+					cmd = "pkill geckodriver";
+				}
+			} else if (driver.toString().toLowerCase().contains("edge")) {
+				if (osName.contains("windows")) {
+					cmd = "taskkill /F /FI \"IMAGENAME eq msedgedriver*\"";
+				} else {
+					cmd = "pkill msedgedriver";
+				}
+			}
+
+		} catch (Exception e) {
+			log.info(e.getMessage());
+		} finally {
+			try {
+				Process process = Runtime.getRuntime().exec(cmd);
+				process.waitFor();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	private long longTimeout = GlobalConstants.LONG_TIMEOUT;
-	
+
 }

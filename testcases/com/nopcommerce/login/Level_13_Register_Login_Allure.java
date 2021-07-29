@@ -104,9 +104,11 @@ public class Level_13_Register_Login_Allure extends BaseTest {
 		verifyTrue(homePage.isHomePageSliderDisplayed());
 	}
 
-	@AfterClass
-	public void afterClass() {
-		driver.quit();
+	@Parameters({"browser"})
+	@AfterClass(alwaysRun = true)
+	public void afterClass(String browserName) {
+		log.info("Post-Condition: Close browser '" + browserName + "'");
+		cleanBrowser();
 	}
 
 	public String getRandomEmail() {
