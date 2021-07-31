@@ -73,7 +73,7 @@ public class Level_13_Register_Login_Allure extends BaseTest {
 		registerPage.clickToRegisterButton();
 		
 		log.info("User_01_Register - Step 10: Verify success message is displayed");
-		verifyFalse(registerPage.isSuccessMessageDisplayed());
+		verifyTrue(registerPage.isSuccessMessageDisplayed());
 
 		log.info("User_01_Register - Step 11: Click to Logout link");
 		homePage = registerPage.clickToLogoutLink();
@@ -101,14 +101,14 @@ public class Level_13_Register_Login_Allure extends BaseTest {
 		homePage = loginPage.clickToLoginButton();
 
 		log.info("User_02_Login - Step 05: Verify Home Page is displayed");
-		verifyTrue(homePage.isHomePageSliderDisplayed());
+		verifyFalse(homePage.isHomePageSliderDisplayed());
 	}
 
 	@Parameters({"browser"})
 	@AfterClass(alwaysRun = true)
 	public void afterClass(String browserName) {
 		log.info("Post-Condition: Close browser '" + browserName + "'");
-		cleanBrowser();
+		cleanBrowserAndDriver();
 	}
 
 	public String getRandomEmail() {

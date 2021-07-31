@@ -168,24 +168,10 @@ public class BaseTest {
 		}
 	}
 
-	protected void cleanBrowser() {
-
-		// Browser
-		if (driver != null) {
-			// IE browser
-			driver.manage().deleteAllCookies();
-			driver.quit();
-		}
-
-	}
-
-	@AfterSuite(alwaysRun = true)
-	protected void cleandExecutableDriver() {
+	protected void cleanBrowserAndDriver() {
 		String cmd = "";
 		try {
 
-			// Executable Browser
-			// Get ra tên của OS và convert qua chữ thường
 			String osName = System.getProperty("os.name").toLowerCase();
 			log.info("OS name = " + osName);
 
@@ -213,19 +199,32 @@ public class BaseTest {
 					cmd = "pkill msedgedriver";
 				}
 			}
-
+			
+			// Browser
+			if (driver != null) {
+				// IE browser
+				driver.manage().deleteAllCookies();
+				driver.quit();
+				System.out.println("close driver instance");
+			}
 		} catch (Exception e) {
 			log.info(e.getMessage());
 		} finally {
 			try {
 				Process process = Runtime.getRuntime().exec(cmd);
 				process.waitFor();
+				System.out.println("Run command line");
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@AfterSuite(alwaysRun = true)
+	protected void cleandExecutableDriver() {
+		System.out.println("run after suite");
 	}
 
 	private long longTimeout = GlobalConstants.LONG_TIMEOUT;
