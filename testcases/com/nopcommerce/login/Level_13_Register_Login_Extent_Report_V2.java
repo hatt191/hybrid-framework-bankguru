@@ -16,7 +16,7 @@ import pageObjects.user.nopCommerce.HomePageObject;
 import pageObjects.user.nopCommerce.LoginPageObject;
 import pageObjects.user.nopCommerce.MyAccountPageObject;
 import pageObjects.user.nopCommerce.OrderPageObject;
-import pageObjects.user.nopCommerce.PageGenerator;
+import pageObjects.user.nopCommerce.PageGeneratorManager;
 import pageObjects.user.nopCommerce.RegisterPageObject;
 import pageObjects.user.nopCommerce.SearchPageObject;
 //import reportConfig.ExtentTestManager;
@@ -103,11 +103,6 @@ public class Level_13_Register_Login_Extent_Report_V2 extends BaseTest {
 	@AfterClass
 	public void afterClass() {
 		driver.quit();
-	}
-
-	public String getRandomEmail() {
-		Random rand = new Random();
-		return "johnterry" + rand.nextInt(99999) + "@live.com";
 	}
 
 	HomePageObject homePage;

@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -19,7 +20,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import pageObjects.user.nopCommerce.MyAccountPageObject;
 import pageObjects.user.nopCommerce.OrderPageObject;
-import pageObjects.user.nopCommerce.PageGenerator;
+import pageObjects.user.nopCommerce.PageGeneratorManager;
 import pageObjects.user.nopCommerce.SearchPageObject;
 import pageUI.admin.nopCommerce.AdminBasePageUI;
 import pageUIs.user.nopCommerce.UserBasePageUI;
@@ -44,6 +45,16 @@ public class BasePage {
 
 	public String getPageSource(WebDriver driver) {
 		return driver.getPageSource();
+	}
+
+	public Set<Cookie> getAllCookies(WebDriver driver) {
+		return driver.manage().getCookies();
+	}
+
+	public void setAllCookies(WebDriver driver, Set<Cookie> allCookies) {
+		for (Cookie cookie : allCookies) {
+			driver.manage().addCookie(cookie);
+		}
 	}
 
 	public Alert waitForAlertPresence(WebDriver driver) {
@@ -271,16 +282,16 @@ public class BasePage {
 			getElement(driver, locator).click();
 		}
 	}
-	
+
 	public boolean isElementUndisplayed(WebDriver driver, String locator) {
 		overrideGlobalTimeout(driver, shortTimeout);
 		List<WebElement> elements = getElements(driver, locator);
 		overrideGlobalTimeout(driver, longTimeout);
-		
+
 		if (elements.size() == 0) {
 			System.out.println("Element not in DOM");
 			return true;
-			
+
 		} else if (elements.size() > 0 && !elements.get(0).isDisplayed()) {
 			System.out.println("Element in DOM but not visible/displayed");
 			return true;
@@ -289,7 +300,7 @@ public class BasePage {
 			return false;
 		}
 	}
-	
+
 	public void overrideGlobalTimeout(WebDriver driver, long timeout) {
 		driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
 	}
@@ -493,19 +504,19 @@ public class BasePage {
 	public SearchPageObject openSearchPage(WebDriver driver) {
 		waitForElementClickable(driver, UserBasePageUI.SEARCH_PAGE_FOOTER);
 		clickToElement(driver, UserBasePageUI.SEARCH_PAGE_FOOTER);
-		return PageGenerator.getSearchPage(driver);
+		return PageGeneratorManager.getSearchPage(driver);
 	}
 
 	public MyAccountPageObject openMyAccountPage(WebDriver driver) {
 		waitForElementClickable(driver, UserBasePageUI.MY_ACCOUNT_PAGE_FOOTER);
 		clickToElement(driver, UserBasePageUI.MY_ACCOUNT_PAGE_FOOTER);
-		return PageGenerator.getMyAccountPage(driver);
+		return PageGeneratorManager.getMyAccountPage(driver);
 	}
 
 	public OrderPageObject openOrderPage(WebDriver driver) {
 		waitForElementClickable(driver, UserBasePageUI.ORDER_PAGE_FOOTER);
 		clickToElement(driver, UserBasePageUI.ORDER_PAGE_FOOTER);
-		return PageGenerator.getOrderPage(driver);
+		return PageGeneratorManager.getOrderPage(driver);
 	}
 
 	public BasePage getFooterPageByName(WebDriver driver, String pageName) {
@@ -513,11 +524,11 @@ public class BasePage {
 		clickToElement(driver, UserBasePageUI.DYNAMIC_PAGE_FOOTER, pageName);
 		switch (pageName) {
 		case "Search":
-			return PageGenerator.getSearchPage(driver);
+			return PageGeneratorManager.getSearchPage(driver);
 		case "Orders":
-			return PageGenerator.getOrderPage(driver);
+			return PageGeneratorManager.getOrderPage(driver);
 		default:
-			return PageGenerator.getMyAccountPage(driver);
+			return PageGeneratorManager.getMyAccountPage(driver);
 		}
 	}
 

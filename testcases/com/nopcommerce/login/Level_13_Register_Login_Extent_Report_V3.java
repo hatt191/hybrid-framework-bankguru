@@ -14,7 +14,7 @@ import pageObjects.user.nopCommerce.HomePageObject;
 import pageObjects.user.nopCommerce.LoginPageObject;
 import pageObjects.user.nopCommerce.MyAccountPageObject;
 import pageObjects.user.nopCommerce.OrderPageObject;
-import pageObjects.user.nopCommerce.PageGenerator;
+import pageObjects.user.nopCommerce.PageGeneratorManager;
 import pageObjects.user.nopCommerce.RegisterPageObject;
 import pageObjects.user.nopCommerce.SearchPageObject;
 
@@ -34,7 +34,7 @@ public class Level_13_Register_Login_Extent_Report_V3 extends BaseTest {
 	@Test
 	public void User_01_Register_To_System() {
 		log.info("User_01_Register - Step 01: Verify Home Page is displayed");
-		homePage = PageGenerator.getHomePage(driver);
+		homePage = PageGeneratorManager.getHomePage(driver);
 		verifyTrue(homePage.isHomePageSliderDisplayed());
 		
 		log.info("User_01_Register - Step 02: Click to Register link");
@@ -94,11 +94,6 @@ public class Level_13_Register_Login_Extent_Report_V3 extends BaseTest {
 	@AfterClass
 	public void afterClass() {
 		driver.quit();
-	}
-
-	public String getRandomEmail() {
-		Random rand = new Random();
-		return "johnterry" + rand.nextInt(99999) + "@live.com";
 	}
 
 	HomePageObject homePage;

@@ -14,15 +14,16 @@
 	<test name="Run on Firefox">
 		<parameter name="browser" value="firefox" />
 		<classes>
-			<class name="com.nopcommerce.login.Level_13_Register_Login_Log_ReportNG" />
+			<class name="com.nopcommerce.common.Common_01_Login" />
+			<class name="com.nopcommerce.login.Level_14_Register_Login_Share_State" />
 		</classes>
 	</test>
 	
-	<test name="Run on Chrome">
-		<parameter name="browser" value="chrome" />
-		<classes>
-			<class name="com.nopcommerce.login.Level_13_Register_Login_Log_ReportNG" />
-		</classes>
-	</test>
+<!-- 	<test name="Run on Chrome"> -->
+<!-- 		<parameter name="browser" value="chrome" /> -->
+<!-- 		<classes> -->
+<!-- 			<class name="com.nopcommerce.login.Level_14_Register_Login_Share_State" /> -->
+<!-- 		</classes> -->
+<!-- 	</test> -->
 
 </suite>

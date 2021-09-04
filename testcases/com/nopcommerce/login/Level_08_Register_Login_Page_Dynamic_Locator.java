@@ -14,7 +14,7 @@ import pageObjects.user.nopCommerce.HomePageObject;
 import pageObjects.user.nopCommerce.LoginPageObject;
 import pageObjects.user.nopCommerce.MyAccountPageObject;
 import pageObjects.user.nopCommerce.OrderPageObject;
-import pageObjects.user.nopCommerce.PageGenerator;
+import pageObjects.user.nopCommerce.PageGeneratorManager;
 import pageObjects.user.nopCommerce.RegisterPageObject;
 import pageObjects.user.nopCommerce.SearchPageObject;
 
@@ -27,7 +27,7 @@ public class Level_08_Register_Login_Page_Dynamic_Locator extends BaseTest {
 	public void beforeClass(String browserName, String appUrl) {
 
 		driver = getBrowserDriver(browserName, appUrl);
-		homePage = PageGenerator.getHomePage(driver);
+		homePage = PageGeneratorManager.getHomePage(driver);
 
 		email = getRandomEmail();
 		password = "123456";
@@ -88,15 +88,15 @@ public class Level_08_Register_Login_Page_Dynamic_Locator extends BaseTest {
 	public void Login_04_Open_Page_At_Footer() {
 		// Search Page -> My Account Page
 		searchPage.openFooterPageByName(driver, "My account");
-		myAccountPage = PageGenerator.getMyAccountPage(driver);
+		myAccountPage = PageGeneratorManager.getMyAccountPage(driver);
 
 		// My Account Page --> Order Page
 		myAccountPage.openFooterPageByName(driver, "Orders");
-		orderPage = PageGenerator.getOrderPage(driver);
+		orderPage = PageGeneratorManager.getOrderPage(driver);
 
 		// My Account Page -> Search Page
 		orderPage.openFooterPageByName(driver, "Search");
-		searchPage = PageGenerator.getSearchPage(driver);
+		searchPage = PageGeneratorManager.getSearchPage(driver);
 	}
 
 	@AfterClass

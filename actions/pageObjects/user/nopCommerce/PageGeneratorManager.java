@@ -2,7 +2,7 @@ package pageObjects.user.nopCommerce;
 
 import org.openqa.selenium.WebDriver;
 
-public class PageGenerator {
+public class PageGeneratorManager {
 //	private static HomePageObject homePage;
 //	private static LoginPageObject loginPage;
 //	private static RegisterPageObject registerPage;
@@ -10,7 +10,7 @@ public class PageGenerator {
 //	private static MyAccountPageObject myAccountPage;
 //	private static OrderPageObject orderPage;
 
-	private PageGenerator() {
+	private PageGeneratorManager() {
 
 	}
 

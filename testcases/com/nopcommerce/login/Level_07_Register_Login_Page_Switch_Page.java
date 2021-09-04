@@ -14,7 +14,7 @@ import pageObjects.user.nopCommerce.HomePageObject;
 import pageObjects.user.nopCommerce.LoginPageObject;
 import pageObjects.user.nopCommerce.MyAccountPageObject;
 import pageObjects.user.nopCommerce.OrderPageObject;
-import pageObjects.user.nopCommerce.PageGenerator;
+import pageObjects.user.nopCommerce.PageGeneratorManager;
 import pageObjects.user.nopCommerce.RegisterPageObject;
 import pageObjects.user.nopCommerce.SearchPageObject;
 
@@ -27,7 +27,7 @@ public class Level_07_Register_Login_Page_Switch_Page extends BaseTest {
 	public void beforeClass(String browserName, String appUrl) {
 
 		driver = getBrowserDriver(browserName, appUrl);
-		homePage = PageGenerator.getHomePage(driver);
+		homePage = PageGeneratorManager.getHomePage(driver);
 		
 		email = getRandomEmail();
 		password = "123456";

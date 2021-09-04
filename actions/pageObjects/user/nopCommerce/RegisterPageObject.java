@@ -76,7 +76,7 @@ public class RegisterPageObject extends BasePage {
 		if (driver.toString().contains("chrome") || driver.toString().contains("edge")) {
 			sleepInSecond(1);
 		}
-		return PageGenerator.getHomePage(driver);
+		return PageGeneratorManager.getHomePage(driver);
 	}
 
 }

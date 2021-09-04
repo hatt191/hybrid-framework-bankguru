@@ -2,6 +2,7 @@ package commons;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
@@ -220,6 +221,11 @@ public class BaseTest {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public String getRandomEmail() {
+		Random rand = new Random();
+		return "johnterry" + rand.nextInt(99999) + "@live.com";
 	}
 
 	@AfterSuite(alwaysRun = true)

@@ -26,7 +26,7 @@ public class HomePageObject extends BasePage {
 	public RegisterPageObject clickToRegisterLink() {
 		waitForElementClickable(driver, HomePageUI.REGISTER_LINK);
 		clickToElement(driver, HomePageUI.REGISTER_LINK);
-		return PageGenerator.getRegisterPage(driver);
+		return PageGeneratorManager.getRegisterPage(driver);
 	}
 
 	@Step("Click to Login link")
@@ -36,7 +36,7 @@ public class HomePageObject extends BasePage {
 		if (driver.toString().contains("chrome") || driver.toString().contains("edge")) {
 			sleepInSecond(1);
 		}
-		return PageGenerator.getLoginPage(driver);
+		return PageGeneratorManager.getLoginPage(driver);
 	}
 
 }

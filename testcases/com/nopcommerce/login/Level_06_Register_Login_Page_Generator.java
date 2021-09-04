@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import commons.BaseTest;
 import pageObjects.user.nopCommerce.HomePageObject;
 import pageObjects.user.nopCommerce.LoginPageObject;
-import pageObjects.user.nopCommerce.PageGenerator;
+import pageObjects.user.nopCommerce.PageGeneratorManager;
 import pageObjects.user.nopCommerce.RegisterPageObject;
 
 public class Level_06_Register_Login_Page_Generator extends BaseTest {
@@ -24,7 +24,7 @@ public class Level_06_Register_Login_Page_Generator extends BaseTest {
 	public void beforeClass(String browserName, String appUrl) {
 
 		driver = getBrowserDriver(browserName, appUrl);
-		homePage = PageGenerator.getHomePage(driver);
+		homePage = PageGeneratorManager.getHomePage(driver);
 		
 		email = getRandomEmail();
 		password = "123456";
