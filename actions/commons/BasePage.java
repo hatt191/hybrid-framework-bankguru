@@ -23,6 +23,7 @@ import pageObjects.user.nopCommerce.OrderPageObject;
 import pageObjects.user.nopCommerce.PageGeneratorManager;
 import pageObjects.user.nopCommerce.SearchPageObject;
 import pageUI.admin.nopCommerce.AdminBasePageUI;
+import pageUIs.user.nopCommerce.RegisterPageUI;
 import pageUIs.user.nopCommerce.UserBasePageUI;
 
 public class BasePage {
@@ -192,6 +193,11 @@ public class BasePage {
 		select.selectByVisibleText(itemText);
 	}
 
+	public void selectDropdownByText(WebDriver driver, String locator, String itemText, String... params) {
+		locator = getDynamicLocator(locator, params);
+		select = new Select(getElement(driver, locator));
+		select.selectByVisibleText(itemText);
+	}
 	public String getSelectedItemDropdown(WebDriver driver, String locator) {
 		select = new Select(getElement(driver, locator));
 		return select.getFirstSelectedOption().getText();
@@ -536,6 +542,12 @@ public class BasePage {
 		waitForElementClickable(driver, UserBasePageUI.DYNAMIC_PAGE_FOOTER, pageName);
 		clickToElement(driver, UserBasePageUI.DYNAMIC_PAGE_FOOTER, pageName);
 	}
+	
+	public void openHeaderPageByName(WebDriver driver, String pageName) {
+		waitForElementClickable(driver, UserBasePageUI.DYNAMIC_PAGE_HEADER, pageName);
+		clickToElement(driver, UserBasePageUI.DYNAMIC_PAGE_HEADER, pageName);
+	}
+
 
 	// Admmin - Nopcommerce
 	public void openSubMenuPageByName(WebDriver driver, String menuPageName, String subMenuPageName) {
@@ -559,7 +571,27 @@ public class BasePage {
 		waitForElementVisible(driver, AdminBasePageUI.NO_DATA_MESSAGE_BY_TABLE_NAME, tableName);
 		return isElementDisplayed(driver, AdminBasePageUI.NO_DATA_MESSAGE_BY_TABLE_NAME, tableName);
 	}
+	
+	// Pattern Object
+	public void enterToTextboxByID(WebDriver driver, String textboxID, String value) {
+		waitForElementVisible(driver, UserBasePageUI.DYNAMIC_TEXTBOX_BY_ID, textboxID);
+		sendkeyToElement(driver, UserBasePageUI.DYNAMIC_TEXTBOX_BY_ID, value, textboxID);
+	}
 
+	public void clickToRadioBtnByID(WebDriver driver, String raditoBtnID) {
+		waitForElementClickable(driver, UserBasePageUI.DYNAMIC_RADIO_BY_ID, raditoBtnID);
+		clickToElement(driver, UserBasePageUI.DYNAMIC_RADIO_BY_ID, raditoBtnID);
+	}
+	
+	public void selectDDLByName(WebDriver driver, String dropdownName, String itemText) {
+		selectDropdownByText(driver, UserBasePageUI.DYNAMIC_DROPDOWN_BY_NAME, itemText, dropdownName);
+	}
+	
+	public void clickToButtonByText(WebDriver driver, String buttonText) {
+		waitForElementClickable(driver, UserBasePageUI.DYNAMIC_BUTTON_BY_TEXT, buttonText);
+		clickToElement(driver, UserBasePageUI.DYNAMIC_BUTTON_BY_TEXT, buttonText);
+	}
+	
 	private Alert alert;
 	private Select select;
 	private Actions action;
